@@ -18,10 +18,12 @@ app.post('/upload',(req,res)=>{
 	const imgUrl = req.body && req.body.message && (req.body.message.type === 'image') && req.body.message.body && req.body.message.body.url;
 	const token = req.query.token;
 	if(!imgUrl){
+		console.log('No image');
 		return res.status(500).send('No image');
 	}
 
 	if(!token){
+		console.log('unauthorized');
 		return res.status(401).send('Not authorized');
 	}
 	const downloadImg = ()=>{
@@ -64,6 +66,7 @@ app.post('/upload',(req,res)=>{
 		return new Promise((resolve,reject)=>{
 			const post_req = https.request(options, (res1, err) => {
 			    if (res1.statusCode !== 200 || err) {
+			    	console.log(res1.statusCode);
 			    	return res.sendStatus(res1.statusCode);
 			        reject(res1.statusCode);
 			    }
@@ -105,6 +108,7 @@ app.post('/upload',(req,res)=>{
 		return  new Promise((resolve,reject)=>{
 			const post_req = https.request(options, (res1, err) => {
 			    if (err) {
+			    	console.log(res1.statusCode);
 			        reject(err);
 			    }
 			    res1.setEncoding('utf-8');
@@ -133,6 +137,7 @@ app.post('/upload',(req,res)=>{
 		return uploadSecond(buffer2)
 	})
 	.then(response=>{
+		console.log(response);
 		res.send(response);
 	})
 	.catch(err=>{
