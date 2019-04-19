@@ -65,19 +65,19 @@ app.post('/upload',(req,res)=>{
 		};
 		return new Promise((resolve,reject)=>{
 			const post_req = https.request(options, (res1, err) => {
+			    let data = '';
 			    if (res1.statusCode !== 200 || err) {
 			    	console.log('On google server upload: '+res1.statusCode);
 			    	res1.setEncoding('utf-8');
-				    res1.on('data', function(chunk) {
-				    	data += chunk;
-				    })
-				    .on('end',function(){
-				    	console.log(data);
-				    });
+			    res1.on('data', function(chunk) {
+			    	data += chunk;
+			    })
+			    .on('end',function(){
+			    	console.log(data);
+			    });
 			    	return res.sendStatus(res1.statusCode);
 			        reject(res1.statusCode);
 			    }
-			    let data = '';
 			    res1.setEncoding('utf-8');
 			    res1.on('data', function(chunk) {
 			    	data += chunk;
@@ -144,7 +144,7 @@ app.post('/upload',(req,res)=>{
 		return uploadSecond(buffer2)
 	})
 	.then(response=>{
-		console.log(response);
+		console.log('uploaded');
 		res.send(response);
 	})
 	.catch(err=>{
