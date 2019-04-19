@@ -11,7 +11,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!')
 })
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.post('/upload',(req,res)=>{
@@ -66,7 +66,14 @@ app.post('/upload',(req,res)=>{
 		return new Promise((resolve,reject)=>{
 			const post_req = https.request(options, (res1, err) => {
 			    if (res1.statusCode !== 200 || err) {
-			    	console.log(res1.statusCode);
+			    	console.log('On google server upload: '+res1.statusCode);
+			    	res1.setEncoding('utf-8');
+				    res1.on('data', function(chunk) {
+				    	data += chunk;
+				    })
+				    .on('end',function(){
+				    	console.log(data);
+				    });
 			    	return res.sendStatus(res1.statusCode);
 			        reject(res1.statusCode);
 			    }
@@ -108,7 +115,7 @@ app.post('/upload',(req,res)=>{
 		return  new Promise((resolve,reject)=>{
 			const post_req = https.request(options, (res1, err) => {
 			    if (err) {
-			    	console.log(res1.statusCode);
+			    	console.log('On photos upload: '+res1.statusCode);
 			        reject(err);
 			    }
 			    res1.setEncoding('utf-8');
@@ -141,6 +148,7 @@ app.post('/upload',(req,res)=>{
 		res.send(response);
 	})
 	.catch(err=>{
+		console.log('Something went wrong');
 		res.status(500).send('Something went wrong');
 	})
 
