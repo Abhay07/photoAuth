@@ -52,6 +52,7 @@ app.post('/upload',(req,res)=>{
 
 	const uploadFirst = (buffer)=>{
 		const imgName = imgUrl.split("/").pop();
+		console.log(imgName);
 		const options = {
 		    host: 'photoslibrary.googleapis.com',
 		    path: '/v1/uploads',
