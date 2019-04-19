@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 app.post('/upload',(req,res)=>{
 	const imgUrl = req.body && req.body.message && (req.body.message.type === 'image') && req.body.message.body && req.body.message.body.url;
+	console.log(imgUrl);
 	const token = req.query.token;
 	if(!imgUrl){
 		console.log('No image');
@@ -52,7 +53,6 @@ app.post('/upload',(req,res)=>{
 
 	const uploadFirst = (buffer)=>{
 		const imgName = imgUrl.split("/").pop();
-		console.log(imgName);
 		const options = {
 		    host: 'photoslibrary.googleapis.com',
 		    path: '/v1/uploads',
