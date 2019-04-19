@@ -144,6 +144,7 @@ app.post('/upload',(req,res)=>{
 		return uploadSecond(buffer2)
 	})
 	.then(response=>{
+		console.log(response);
 		console.log('uploaded');
 		res.send(response);
 	})
