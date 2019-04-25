@@ -164,6 +164,7 @@ app.post('/upload',(req,res)=>{
   	});
 	const token = req.query.token;
 	const imgName = req.query.name;
+	const albumId = req.query.albumId;
 	if(!token){
 		console.log('unauthorized');
 		return res.status(401).send('Not authorized');
@@ -222,6 +223,7 @@ app.post('/upload',(req,res)=>{
 		    }
 		};
 		const body = JSON.stringify({
+		  "albumId":albumId,
 		  "newMediaItems": [
 		    {
 		      "description": "caret image",
@@ -260,7 +262,6 @@ app.post('/upload',(req,res)=>{
 			return uploadSecond(buffer2)
 		})
 		.then(response=>{
-			console.log(JSON.stringify(response));
 			console.log('uploaded');
 			res.send(response);
 		})
